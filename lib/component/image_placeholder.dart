@@ -8,15 +8,16 @@ class ImagePlaceholder extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.black,
+            color: Colors.blue,
+            width: 2
           ),
           borderRadius: const BorderRadius.all(Radius.circular(100)),
-          color: Colors.black
+          color: const Color.fromRGBO(0, 0, 0, 0.05),
       ),
       child: const Center(
         child: Icon(
           Icons.photo_rounded,
-          color: Colors.white,
+          color: Colors.blue,
         ),
       ),
     );

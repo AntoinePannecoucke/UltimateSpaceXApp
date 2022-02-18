@@ -23,26 +23,36 @@ class HomePage extends StatelessWidget {
               items: const [
                 BottomNavigationBarItem(
                     label: "Upcoming",
+                    icon: Icon(Icons.upcoming_outlined),
+                    activeIcon: Icon(
+                      Icons.upcoming,
+                      color: Colors.blue,
+                    )),
+                BottomNavigationBarItem(
+                    label: "Previous",
                     icon: Icon(Icons.access_time),
                     activeIcon: Icon(
                       Icons.access_time_filled,
                       color: Colors.blue,
                     )),
                 BottomNavigationBarItem(
-                    label: "Favoris",
-                    icon: Icon(Icons.favorite_border),
+                    label: "Map",
+                    icon: Icon(Icons.map_outlined),
                     activeIcon: Icon(
-                      Icons.favorite,
+                      Icons.map,
                       color: Colors.blue,
                     ))
               ],
+              onTap: (newIndex) {
+
+              },
             ),
           body: ListView.builder(
         itemBuilder: (context, position) {
           Launch launch = model.launches[position];
           return InkWell(
             onTap: () async {
-              //TODO: Favorite
+              //TODO: Nav
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,9 +80,9 @@ class HomePage extends StatelessWidget {
                     children: [
                       Text(
                         "${launch.name}" ,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text("Launch date : ${launch.staticFireDateUTC ?? "Not defined"}")
