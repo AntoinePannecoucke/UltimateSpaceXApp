@@ -23,4 +23,20 @@ class LaunchesManager {
     }
     return launches;
   }
+
+  Future<List<Launch>?> getLaunches() async {
+    List<Launch>? launches = [];
+    try {
+      var response = await getItLocator<DioRepository>().getLaunches();
+      if (response.data != null) {
+        // Mapping data
+        launches = List<dynamic>.from(response.data!)
+            .map((json) => Launch.fromJson(json))
+            .toList();
+      }
+    } catch (e) {
+      debugPrint("Erreur : $e");
+    }
+    return launches;
+  }
 }

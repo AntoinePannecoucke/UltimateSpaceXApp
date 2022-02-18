@@ -13,4 +13,7 @@ class DioRepository {
   Future<Response<List<dynamic>>> getUpcomingLaunches() async =>
       await dio.get<List<dynamic>>("/launches/upcoming");
 
+  Future<Response<List<dynamic>>> getLaunches() async =>
+      await dio.get<List<dynamic>>("/launches/past");
+
 }

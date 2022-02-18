@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ultimate_space_x_app/model/launch.dart';
 
 import '../component/image_placeholder.dart';
+import '../component/launch_list.dart';
 import '../viewmodel/home_viewmodel.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
             appBar: AppBar(
               // Here we take the value from the HomePage object that was created by
               // the App.build method, and use it to set our appbar title.
-              title: Text("SpaceX launches"),
+              title: const Text("SpaceX launches"),
             ),
             bottomNavigationBar: BottomNavigationBar(
               items: const [
@@ -43,58 +44,32 @@ class HomePage extends StatelessWidget {
                       color: Colors.blue,
                     ))
               ],
+              currentIndex: model.currentIndex,
               onTap: (newIndex) {
-
+                model.setCurrentIndex(newIndex);
+                switch(newIndex){
+                  case 0:
+                    model.loadUpcomingLaunches();
+                    break;
+                  case 1:
+                    model.loadLaunches();
+                    break;
+                  case 2:
+                    break;
+                  default:
+                    return;
+                }
+                model.pageController.animateToPage(newIndex, duration: const Duration(seconds: 1), curve: Curves.ease);
               },
             ),
-          body: ListView.builder(
-        itemBuilder: (context, position) {
-          Launch launch = model.launches[position];
-          return InkWell(
-            onTap: () async {
-              //TODO: Nav
-            },
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Image.network(
-                        launch.links?.patch?.small ?? '',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, child, stack) {
-                          return const ImagePlaceholder();
-                        },
-                      ),
-                    )),
-                const SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${launch.name}" ,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text("Launch date : ${launch.staticFireDateUTC ?? "Not defined"}")
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-        itemCount: model.launches.length,
-        )
+          body: PageView(
+            controller: model.pageController,
+            children: [
+              LaunchListView(launches: model.upcomingLaunches),
+              LaunchListView(launches: model.launches),
+              LaunchListView(launches: model.upcomingLaunches),
+            ],
+          )
         );
       }),
     );
