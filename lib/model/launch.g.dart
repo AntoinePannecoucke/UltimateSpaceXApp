@@ -17,8 +17,11 @@ Launch _$LaunchFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => v == null
                   ? null
                   : Fairings.fromJson(v as Map<String, dynamic>)),
+          staticFireDateUnix:
+              $checkedConvert('static_fire_date_unix', (v) => v as int?),
           staticFireDateUTC:
-              $checkedConvert('static_fire_date_u_t_c', (v) => v as String?),
+              $checkedConvert('static_fire_date_utc', (v) => v as String?),
+          dateUTC: $checkedConvert('date_utc', (v) => v as String?),
           window: $checkedConvert('window', (v) => v as int?),
           rocket: $checkedConvert('rocket', (v) => v as String?),
           success: $checkedConvert('success', (v) => v as bool?),
@@ -42,13 +45,19 @@ Launch _$LaunchFromJson(Map<String, dynamic> json) => $checkedCreate(
         );
         return val;
       },
-      fieldKeyMap: const {'staticFireDateUTC': 'static_fire_date_u_t_c'},
+      fieldKeyMap: const {
+        'staticFireDateUnix': 'static_fire_date_unix',
+        'staticFireDateUTC': 'static_fire_date_utc',
+        'dateUTC': 'date_utc'
+      },
     );
 
 Map<String, dynamic> _$LaunchToJson(Launch instance) => <String, dynamic>{
       'fairings': instance.fairings?.toJson(),
       'links': instance.links?.toJson(),
-      'static_fire_date_u_t_c': instance.staticFireDateUTC,
+      'static_fire_date_unix': instance.staticFireDateUnix,
+      'static_fire_date_utc': instance.staticFireDateUTC,
+      'date_utc': instance.dateUTC,
       'window': instance.window,
       'rocket': instance.rocket,
       'success': instance.success,

@@ -10,10 +10,14 @@ class DioRepository {
     dio.options.baseUrl = "https://api.spacexdata.com/v4";
   }
 
+
+
   Future<Response<List<dynamic>>> getUpcomingLaunches() async =>
       await dio.get<List<dynamic>>("/launches/upcoming");
 
   Future<Response<List<dynamic>>> getLaunches() async =>
       await dio.get<List<dynamic>>("/launches/past");
 
+  Future<Response<List<dynamic>>> getLaunchpads() async =>
+      await dio.get<List<dynamic>>("/launchpads");
 }

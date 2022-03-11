@@ -11,55 +11,71 @@ class LaunchListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, position) {
-        Launch launch = launches[position];
-        return InkWell(
-          onTap: () async {
-            //TODO: Nav
-          },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Image.network(
-                      launch.links?.patch?.small ?? '',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, child, stack) {
-                        return const ImagePlaceholder();
-                      },
-                    ),
-                  )),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: ListView.builder(
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
+        itemBuilder: (context, position) {
+          Launch launch = launches[position];
+          return InkWell(
+            onTap: () async {
+              //TODO: Nav
+            },
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "${launch.name}",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Container(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image.network(
+                            launch.links?.patch?.small ?? '',
+                            fit: BoxFit.fitWidth,
+                            errorBuilder: (context, child, stack) {
+                              return const ImagePlaceholder();
+                            },
+                          ),
+                        )),
                     const SizedBox(
-                      height: 8,
+                      width: 16,
                     ),
-                    Text("Launch date : ${launch.staticFireDateUTC ??
-                        "Not defined"}")
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${launch.name}",
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text("Launch date : ${launch.dateUTC ??
+                              "Not defined"}")
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-      itemCount: launches.length,
+                Container(
+                  height: 1,
+                  margin: EdgeInsets.only(left: 25, right: 25, top: 8, bottom: 8),
+                  color: Colors.grey,
+                ),
+              ],
+
+            ),
+          );
+        },
+        itemCount: launches.length,
+      ),
     );
   }
 }

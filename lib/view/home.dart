@@ -1,16 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ultimate_space_x_app/model/launch.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../component/image_placeholder.dart';
 import '../component/launch_list.dart';
 import '../viewmodel/home_viewmodel.dart';
+import 'compagny.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    Completer<GoogleMapController> _controller = Completer();
+
+    final CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng(0, 0),
+      zoom: 0,
+    );
+
+
     return ChangeNotifierProvider(
       create: (context) => HomeViewModel(),
       child: Consumer<HomeViewModel>(builder: (context, model, child){
@@ -18,9 +29,23 @@ class HomePage extends StatelessWidget {
             appBar: AppBar(
               // Here we take the value from the HomePage object that was created by
               // the App.build method, and use it to set our appbar title.
-              title: const Text("SpaceX launches"),
+              title: const Text("SpaceX app"),
+              titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+              ),
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.blue,
+              actions: <Widget>[
+                IconButton(onPressed: () async => {
+                  await Navigator.of(context).pushNamed(CompagnyPage.route)
+                }, icon: const Icon(Icons.info_outline_rounded)
+                ),
+              ],
             ),
             bottomNavigationBar: BottomNavigationBar(
+
               items: const [
                 BottomNavigationBarItem(
                     label: "Upcoming",
@@ -47,30 +72,37 @@ class HomePage extends StatelessWidget {
               currentIndex: model.currentIndex,
               onTap: (newIndex) {
                 model.setCurrentIndex(newIndex);
-                switch(newIndex){
-                  case 0:
-                    model.loadUpcomingLaunches();
-                    break;
-                  case 1:
-                    model.loadLaunches();
-                    break;
-                  case 2:
-                    break;
-                  default:
-                    return;
-                }
                 model.pageController.animateToPage(newIndex, duration: const Duration(seconds: 1), curve: Curves.ease);
               },
             ),
-          body: PageView(
-            controller: model.pageController,
-            children: [
-              LaunchListView(launches: model.upcomingLaunches),
-              LaunchListView(launches: model.launches),
-              LaunchListView(launches: model.upcomingLaunches),
-            ],
-          )
-        );
+          body: FutureBuilder(
+            future: model.load(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return PageView(
+                  controller: model.pageController,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    LaunchListView(launches: model.upcomingLaunches),
+                    LaunchListView(launches: model.launches),
+                    GoogleMap(
+                      compassEnabled: true,
+                      mapToolbarEnabled: true,
+                      markers: model.markers,
+                      mapType: MapType.hybrid,
+                      initialCameraPosition: _kGooglePlex,
+                      onMapCreated: (GoogleMapController controller) {
+                        _controller.complete(controller);
+                      },
+                    ) ,
+                  ],
+                );
+              }
+              else {
+                return const Center(child: CircularProgressIndicator(),);
+              }
+            })
+          );
       }),
     );
   }

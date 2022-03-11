@@ -49,6 +49,7 @@ dependencies:
   injectable: ^1.5.3
   #Provider
   provider: ^6.0.2
+  google_maps_flutter: ^2.1.2
 
 dev_dependencies:
   flutter_test:

@@ -10,7 +10,12 @@ part 'launch.g.dart';
 class Launch {
   Fairings? fairings;
   Links? links;
+  @JsonKey(name: "static_fire_date_unix")
+  int? staticFireDateUnix;
+  @JsonKey(name: "static_fire_date_utc")
   String? staticFireDateUTC;
+  @JsonKey(name: "date_utc")
+  String? dateUTC;
   int? window;
   String? rocket;
   bool? success;
@@ -26,7 +31,9 @@ class Launch {
   Launch({
     required this.id,
     this.fairings,
+    this.staticFireDateUnix,
     this.staticFireDateUTC,
+    this.dateUTC,
     this.window,
     this.rocket,
     this.success,

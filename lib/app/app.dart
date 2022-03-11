@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ultimate_space_x_app/view/compagny.dart';
 import '../../view/home.dart';
 
 class App extends StatelessWidget {
@@ -26,22 +27,15 @@ class App extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      /*onGenerateRoute: (RouteSettings settings) {
+      onGenerateRoute: (RouteSettings settings) {
         var arguments = settings.arguments;
         switch (settings.name) {
-          case SpotDetail.route:
-            if (arguments != null && arguments is SpotDetailArguments) {
-              Spot spot = arguments.spot;
-              return MaterialPageRoute(builder: (_) => SpotDetail(spot));
-            } else {
-              throw Exception(
-                  "Cette route doit avoir un objet SpotDetailArgument en argument");
-            }
-
+          case CompagnyPage.route:
+            return MaterialPageRoute(builder: (_) => CompagnyPage());
           default:
             return unknownRoute();
         }
-      },*/
+      },
       home: const HomePage(),
     );
   }
