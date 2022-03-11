@@ -20,4 +20,7 @@ class DioRepository {
 
   Future<Response<List<dynamic>>> getLaunchpads() async =>
       await dio.get<List<dynamic>>("/launchpads");
+
+  Future<Response<Map<String, dynamic>>> getInfo() async =>
+      await dio.get<Map<String, dynamic>>("/company");
 }
