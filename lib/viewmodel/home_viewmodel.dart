@@ -8,7 +8,7 @@ import '../manager/data_manager.dart';
 class HomeViewModel extends ChangeNotifier {
   List<Launch> upcomingLaunches = [];
   List<Launch> launches = [];
-  Set<Marker> markers = Set();
+  Set<Marker> markers = {};
 
   int currentIndex = 0;
   void setCurrentIndex(int index) {

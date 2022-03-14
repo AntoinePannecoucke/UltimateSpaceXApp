@@ -1,17 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'compagny_info.dart';
+part of 'company_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CompagnyInfo _$CompagnyInfoFromJson(Map<String, dynamic> json) =>
-    $checkedCreate(
-      'CompagnyInfo',
+CompanyInfo _$CompanyInfoFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'CompanyInfo',
       json,
       ($checkedConvert) {
-        final val = CompagnyInfo(
+        final val = CompanyInfo(
           id: $checkedConvert('id', (v) => v as String),
           name: $checkedConvert('name', (v) => v as String?),
           ceo: $checkedConvert('ceo', (v) => v as String?),
@@ -37,7 +36,7 @@ CompagnyInfo _$CompagnyInfoFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$CompagnyInfoToJson(CompagnyInfo instance) =>
+Map<String, dynamic> _$CompanyInfoToJson(CompanyInfo instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

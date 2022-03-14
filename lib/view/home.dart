@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../component/launch_list.dart';
 import '../viewmodel/home_viewmodel.dart';
-import 'compagny.dart';
+import 'company.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
 
     Completer<GoogleMapController> _controller = Completer();
 
-    final CameraPosition _kGooglePlex = CameraPosition(
+    const CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(0, 0),
       zoom: 0,
     );
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
               // Here we take the value from the HomePage object that was created by
               // the App.build method, and use it to set our appbar title.
               title: const Text("SpaceX app"),
-              titleTextStyle: TextStyle(
+              titleTextStyle: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
               foregroundColor: Colors.blue,
               actions: <Widget>[
                 IconButton(onPressed: () async => {
-                  await Navigator.of(context).pushNamed(CompagnyPage.route)
+                  await Navigator.of(context).pushNamed(CompanyPage.route)
                 }, icon: const Icon(Icons.info_outline_rounded)
                 ),
               ],
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
               if (snapshot.hasData) {
                 return PageView(
                   controller: model.pageController,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     LaunchListView(launches: model.upcomingLaunches),
                     LaunchListView(launches: model.launches),

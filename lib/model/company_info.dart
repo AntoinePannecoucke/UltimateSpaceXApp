@@ -3,10 +3,10 @@ import 'package:json_annotation/json_annotation.dart';
 import 'headquarters.dart';
 
 
-part 'compagny_info.g.dart';
+part 'company_info.g.dart';
 
 @JsonSerializable(checked: true, explicitToJson: true, fieldRename: FieldRename.snake)
-class CompagnyInfo {
+class CompanyInfo {
   String id;
   String? name;
   String? founder;
@@ -22,7 +22,7 @@ class CompagnyInfo {
   int? launchSites;
   Headquarters? headquarters;
 
-  CompagnyInfo({
+  CompanyInfo({
     required this.id,
     this.name,
     this.ceo,
@@ -37,7 +37,7 @@ class CompagnyInfo {
     this.summary,
   });
 
-  factory CompagnyInfo.fromJson(Map<String, dynamic> json) => _$CompagnyInfoFromJson(json);
+  factory CompanyInfo.fromJson(Map<String, dynamic> json) => _$CompanyInfoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CompagnyInfoToJson(this);
+  Map<String, dynamic> toJson() => _$CompanyInfoToJson(this);
 }

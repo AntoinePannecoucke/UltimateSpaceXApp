@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ultimate_space_x_app/viewmodel/compagny_viewmodel.dart';
+import 'package:ultimate_space_x_app/viewmodel/company_viewmodel.dart';
 
-class CompagnyPage extends StatelessWidget {
+class CompanyPage extends StatelessWidget {
 
-  static const route = "/compagny";
+  static const route = "/company";
 
-  var viewmodel = CompagnyViewModel();
+  final viewmodel = CompanyViewModel();
+
+  CompanyPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,20 @@ class CompagnyPage extends StatelessWidget {
         appBar: AppBar(
           // Here we take the value from the HomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text("Compagny info"),
-          titleTextStyle: TextStyle(
+          title: const Text("Company info"),
+          titleTextStyle: const TextStyle(
               color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold
           ),
           backgroundColor: Colors.white,
           foregroundColor: Colors.blue,
+          actions: <Widget>[
+            IconButton(onPressed: () => {},
+                icon: Icon(Icons.info_rounded),
+              color: Colors.blue,
+            ),
+          ],
         ),
         body: FutureBuilder(
           future: viewmodel.loadInfo(),

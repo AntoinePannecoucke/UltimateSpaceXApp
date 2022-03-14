@@ -23,4 +23,7 @@ class DioRepository {
 
   Future<Response<Map<String, dynamic>>> getInfo() async =>
       await dio.get<Map<String, dynamic>>("/company");
+
+  Future<Response<Map<String, dynamic>>> getCrew(String idCrew) async =>
+      await dio.get<Map<String, dynamic>>("/crew/$idCrew");
 }

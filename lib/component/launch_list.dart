@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ultimate_space_x_app/view/launch_details.dart';
 
 import '../model/launch.dart';
 import '../viewmodel/home_viewmodel.dart';
@@ -21,7 +22,8 @@ class LaunchListView extends StatelessWidget {
           Launch launch = launches[position];
           return InkWell(
             onTap: () async {
-              //TODO: Nav
+              await Navigator.of(context).pushNamed(LaunchDetailsPage.route,
+                  arguments: LaunchDetailsArguments(launch: launch));
             },
             child: Column(
               children: [

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ultimate_space_x_app/view/compagny.dart';
+import 'package:ultimate_space_x_app/model/launch.dart';
+import 'package:ultimate_space_x_app/view/company.dart';
 import '../../view/home.dart';
+import '../view/launch_details.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -30,8 +32,16 @@ class App extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         var arguments = settings.arguments;
         switch (settings.name) {
-          case CompagnyPage.route:
-            return MaterialPageRoute(builder: (_) => CompagnyPage());
+          case CompanyPage.route:
+            return MaterialPageRoute(builder: (_) => CompanyPage());
+          case LaunchDetailsPage.route:
+            if (arguments != null && arguments is LaunchDetailsArguments){
+              return MaterialPageRoute(builder: (_) => LaunchDetailsPage(arguments.launch));
+            }
+            else {
+              throw Exception("This route need one or more arguments, see ${(LaunchDetailsPage).toString()}");
+            }
+
           default:
             return unknownRoute();
         }
@@ -43,7 +53,7 @@ class App extends StatelessWidget {
   MaterialPageRoute unknownRoute() {
     return MaterialPageRoute(
         builder: (_) => const Scaffold(
-          body: Center(child: Text("Route inconnue")),
+          body: Center(child: Text("Unknown route")),
         ));
   }
 }

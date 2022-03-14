@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:ultimate_space_x_app/model/compagny_info.dart';
+import 'package:ultimate_space_x_app/model/company_info.dart';
 import 'package:ultimate_space_x_app/model/launchpad.dart';
 import 'package:ultimate_space_x_app/repository/dio_repository.dart';
 import 'package:ultimate_space_x_app/repository/get_it.dart';
 
+import '../model/crew.dart';
 import '../model/launch.dart';
 
 @singleton
@@ -58,17 +59,31 @@ class DataManager {
     return launches;
   }
 
-  Future<CompagnyInfo?> getInfo() async {
-    CompagnyInfo? info;
+  Future<CompanyInfo?> getInfo() async {
+    CompanyInfo? info;
     try {
       var response = await getItLocator<DioRepository>().getInfo();
       if (response.data != null) {
         // Mapping data
-        info = CompagnyInfo.fromJson(response.data!);
+        info = CompanyInfo.fromJson(response.data!);
       }
     } catch (e) {
       debugPrint("Erreur : $e");
     }
     return info;
+  }
+
+  Future<Crew?> getCrewById(String idCrew) async {
+    Crew? crew;
+    try {
+      var response = await getItLocator<DioRepository>().getCrew(idCrew);
+      if (response.data != null) {
+        // Mapping data
+        crew = Crew.fromJson(response.data!);
+      }
+    } catch (e) {
+      debugPrint("Erreur : $e");
+    }
+    return crew;
   }
 }
