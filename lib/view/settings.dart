@@ -39,9 +39,46 @@ class _SettingsPage extends State<SettingsPage>{
           backgroundColor: Colors.white,
           foregroundColor: Colors.blue,
         ),
-        body: Container(
-        child: const Text("Settings"),
-    )
+        body: FutureBuilder(
+        future: viewmodel.init(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Daily notifications : "),
+                          Switch(value: viewmodel.dailyNotificationEnable,
+                              onChanged: (newValue) {
+                            viewmodel.toggleDaily();
+                                setState(() {
+
+                                });
+                              })
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Timer notifications : "),
+                          Switch(value: viewmodel.timerNotificationEnable,
+                              onChanged: (newValue) {
+                                viewmodel.toggleTimer();
+                                setState(() {
+
+                                });
+                              })
+                        ],
+                      )
+                    ],
+                  )
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator(),);
+            }
+          })
     );
   }
 

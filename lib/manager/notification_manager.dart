@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -20,15 +21,20 @@ class NotificationManager {
     final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid,iOS: initializationSettingsIOS);
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: _selectNotification);
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
-        'RepeatingElonMuskId', 'ultimateSpaceXAppNotificationRepeatingChannel',
-        channelDescription: 'Notification channel for Ultimate SpaceX App every day notifications');
-    const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
-    await _flutterLocalNotificationsPlugin.periodicallyShow(1, 'Elon want\'s you !',
-        'Check it out !', RepeatInterval.daily, platformChannelSpecifics,
-        androidAllowWhileIdle: true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool("dailyNotificationEnable") ?? true) {
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+          'RepeatingElonMuskId',
+          'ultimateSpaceXAppNotificationRepeatingChannel',
+          channelDescription: 'Notification channel for Ultimate SpaceX App every day notifications');
+      const NotificationDetails platformChannelSpecifics =
+      NotificationDetails(android: androidPlatformChannelSpecifics);
+      await _flutterLocalNotificationsPlugin.periodicallyShow(
+          1, 'Elon want\'s you !',
+          'Check it out !', RepeatInterval.daily, platformChannelSpecifics,
+          androidAllowWhileIdle: true);
+    }
 
   }
 
