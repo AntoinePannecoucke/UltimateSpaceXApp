@@ -13,8 +13,8 @@ class LaunchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: ListView.builder(
         padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
