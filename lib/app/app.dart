@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ultimate_space_x_app/model/launch.dart';
 import 'package:ultimate_space_x_app/view/company.dart';
+import 'package:ultimate_space_x_app/view/settings.dart';
 import '../../view/home.dart';
+import '../view/favorite_list.dart';
 import '../view/launch_details.dart';
 
 class App extends StatelessWidget {
@@ -42,6 +43,10 @@ class App extends StatelessWidget {
               throw Exception("This route need one or more arguments, see ${(LaunchDetailsPage).toString()}");
             }
 
+          case FavoritePage.route:
+            return MaterialPageRoute(builder: (_) => FavoritePage());
+          case SettingsPage.route:
+            return MaterialPageRoute(builder: (_) => SettingsPage());
           default:
             return unknownRoute();
         }

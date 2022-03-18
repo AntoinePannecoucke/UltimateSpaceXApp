@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:ultimate_space_x_app/model/company_info.dart';
@@ -7,9 +9,12 @@ import 'package:ultimate_space_x_app/repository/get_it.dart';
 
 import '../model/crew.dart';
 import '../model/launch.dart';
+import 'database_manager.dart';
 
 @singleton
 class DataManager {
+
+  List<Launch> _favorites = [];
 
   Future<List<Launchpad>?> getLaunchpads() async {
     List<Launchpad>? launchpads = [];
@@ -85,5 +90,28 @@ class DataManager {
       debugPrint("Erreur : $e");
     }
     return crew;
+  }
+
+  Future<void> toggleFavorite(Launch launch) async {
+    bool isFavorite = await getItLocator<DatabaseManager>().isFavorite(launch.id);
+    await getItLocator<DatabaseManager>().toggleFavorite(isFavorite, launch);
+    _favorites = await getItLocator<DatabaseManager>().getFavoriteLaunches();
+  }
+
+  Future<List<Launch>> getFavorites() async {
+    return _favorites;
+  }
+
+  Future<List<Launch>> loadFavorites() async {
+    return _favorites = await getItLocator<DatabaseManager>().getFavoriteLaunches();
+  }
+
+  bool isFavorites(Launch launch) {
+    try {
+      return _favorites.firstWhere((favorite) => favorite.id == launch.id) != null;
+    }
+    catch(e) {
+      return false;
+    }
   }
 }

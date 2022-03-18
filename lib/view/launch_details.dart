@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ultimate_space_x_app/repository/get_it.dart';
 import 'package:ultimate_space_x_app/viewmodel/launch_details_viewmodel.dart';
 
 import '../component/image_placeholder.dart';
@@ -19,7 +20,7 @@ class LaunchDetailsPage extends StatelessWidget {
   late final LaunchDetailsViewModel viewModel;
 
   LaunchDetailsPage(Launch launch, {Key? key}) : super(key: key){
-    viewModel = LaunchDetailsViewModel(launch: launch);
+    viewModel = getItLocator<LaunchDetailsViewModel>(param1: launch);
   }
 
   @override
@@ -86,6 +87,9 @@ class LaunchDetailsPage extends StatelessWidget {
                                             child: Image.network(
                                               crew.image ?? '',
                                               fit: BoxFit.cover,
+                                              loadingBuilder: (context, child, loadingProgress) {
+                                                return child ;
+                                            },
                                               errorBuilder: (context, child, stack) {
                                                 return const ImagePlaceholder();
                                               },

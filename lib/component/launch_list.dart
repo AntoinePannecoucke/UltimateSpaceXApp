@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ultimate_space_x_app/repository/get_it.dart';
 import 'package:ultimate_space_x_app/view/launch_details.dart';
 
+import '../manager/data_manager.dart';
 import '../model/launch.dart';
-import '../viewmodel/home_viewmodel.dart';
 import 'image_placeholder.dart';
 
 class LaunchListView extends StatelessWidget {
-  LaunchListView({Key? key, required this.launches}) : super(key: key);
+  LaunchListView({Key? key, required this.launches, this.onToggleFavorite}) : super(key: key);
+  final Function(Launch, bool)? onToggleFavorite;
 
-  List<Launch> launches;
+  final List<Launch> launches;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class LaunchListView extends StatelessWidget {
             onTap: () async {
               await Navigator.of(context).pushNamed(LaunchDetailsPage.route,
                   arguments: LaunchDetailsArguments(launch: launch));
+              onToggleFavorite?.call(launch, false);
             },
             child: Column(
               children: [
@@ -60,15 +63,26 @@ class LaunchListView extends StatelessWidget {
                             height: 8,
                           ),
                           Text("Launch date : ${launch.dateUTC ??
-                              "Not defined"}")
+                              "Not defined"}"
+                          ),
                         ],
                       ),
+                    ),
+                    IconButton(
+                        onPressed: () => {
+                          onToggleFavorite?.call(launch, true)
+                        },
+                        icon: (getItLocator<DataManager>().isFavorites(launch) ?
+                            const Icon(Icons.favorite_outlined, color: Colors.blue) :
+                            const Icon(Icons.favorite_outline_outlined, color: Colors.black)
+
+                        )
                     ),
                   ],
                 ),
                 Container(
                   height: 1,
-                  margin: EdgeInsets.only(left: 25, right: 25, top: 8, bottom: 8),
+                  margin: const EdgeInsets.only(left: 25, right: 25, top: 8, bottom: 8),
                   color: Colors.grey,
                 ),
               ],

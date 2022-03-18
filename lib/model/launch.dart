@@ -26,7 +26,7 @@ class Launch {
   String? launchpad;
   String? name;
   bool? upcoming;
-  String? id;
+  String id;
 
   Launch({
     required this.id,

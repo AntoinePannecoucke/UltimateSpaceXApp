@@ -11,7 +11,7 @@ Launch _$LaunchFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Launch(
-          id: $checkedConvert('id', (v) => v as String?),
+          id: $checkedConvert('id', (v) => v as String),
           fairings: $checkedConvert(
               'fairings',
               (v) => v == null

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ultimate_space_x_app/viewmodel/company_viewmodel.dart';
 
+import '../repository/get_it.dart';
+
 class CompanyPage extends StatelessWidget {
 
   static const route = "/company";
 
-  final viewmodel = CompanyViewModel();
+  final viewmodel = getItLocator<CompanyViewModel>();
 
   CompanyPage({Key? key}) : super(key: key);
 
@@ -24,9 +26,9 @@ class CompanyPage extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.blue,
           actions: <Widget>[
-            IconButton(onPressed: () => {},
-                icon: Icon(Icons.info_rounded),
-              color: Colors.blue,
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+                child: const Icon(Icons.info_rounded, color: Colors.blue)
             ),
           ],
         ),
